@@ -46,9 +46,61 @@ int pop(Pilha *p) {
     return valor;
 }
 
+// Função para exibir a pilha
+void exibir(Pilha *p) {
+    if (estaVazia(p)) {
+        printf("Pilha vazia!\n");
+        return;
+    }
+    printf("Pilha: ");
+    for (int i = 0; i <= p->topo; i++) {
+        printf("%d ", p->itens[i]);
+    }
+    printf("\n");
+}
+
+// Função para remover um item específico da pilha preservando a ordem dos demais
+void removerEspecifico(Pilha *p, int valorAlvo) {
+    Pilha temp;
+    inicializar(&temp);
+    int encontrado = 0;
+
+    // Esvazia a pilha original para a temporária, procurando o valor alvo
+    while (!estaVazia(p)) {
+        int v = pop(p);
+        if (v == valorAlvo && !encontrado) {
+            encontrado = 1; // Descarta a primeira ocorrência do valor encontrado
+        } else {
+            push(&temp, v);
+        }
+    }
+
+    // Devolve os elementos da pilha temporária de volta para a original
+    while (!estaVazia(&temp)) {
+        push(p, pop(&temp));
+    }
+
+    if (encontrado) {
+        printf("Elemento %d removido com sucesso da pilha!\n", valorAlvo);
+    } else {
+        printf("Elemento %d nao foi encontrado na pilha!\n", valorAlvo);
+    }
+}
 
 int main() {
+    Pilha p;
+    inicializar(&p);
+
+    push(&p, 10);
+    push(&p, 20);
+    push(&p, 30);
     
+    exibir(&p);
+
+    // Testando a remoção de um item específico (ex: 20, que está no meio)
+    removerEspecifico(&p, 20);
+
+    exibir(&p);
 
     return 0;
 }
