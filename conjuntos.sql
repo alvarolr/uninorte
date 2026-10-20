@@ -1,0 +1,13 @@
+CREATE DATABASE conjuntos;
+DROP TABLE IF EXISTS Matriculas;
+DROP TABLE IF EXISTS Alunos;
+DROP TABLE IF EXISTS Disciplinas;
+DROP TABLE IF EXISTS Cursos;
+CREATE TABLE Cursos (id_curso INTEGER PRIMARY KEY, nome_curso TEXT NOT NULL);
+CREATE TABLE Alunos (id_aluno INTEGER PRIMARY KEY, nome TEXT NOT NULL, id_curso INTEGER NOT NULL, FOREIGN KEY (id_curso) REFERENCES Cursos(id_curso));
+CREATE TABLE Disciplinas (id_disciplina INTEGER PRIMARY KEY, nome_disciplina TEXT NOT NULL);
+CREATE TABLE Matriculas (id_matricula INTEGER PRIMARY KEY, id_aluno INTEGER NOT NULL, id_disciplina INTEGER NOT NULL, FOREIGN KEY (id_aluno) REFERENCES Alunos(id_aluno), FOREIGN KEY (id_disciplina) REFERENCES Disciplinas(id_disciplina), UNIQUE(id_aluno,id_disciplina));
+INSERT INTO Cursos VALUES (1,'Sistemas de Informação'),(2,'Ciência da Computação'),(3,'Engenharia de Software');
+INSERT INTO Alunos VALUES (1,'Ana',1),(2,'Bruno',1),(3,'Carla',2),(4,'Diego',2),(5,'Eva',3),(6,'Fabio',3),(7,'Gabriela',1),(8,'Hugo',2);
+INSERT INTO Disciplinas VALUES (1,'Programação'),(2,'Banco de Dados'),(3,'Estruturas de Dados'),(4,'Redes de Computadores'),(5,'Inteligência Artificial');
+INSERT INTO Matriculas VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,3,2),(6,4,2),(7,5,2),(8,6,2),(9,1,3),(10,5,3),(11,7,4);
